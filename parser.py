@@ -17,15 +17,48 @@ import re
 # enlever point virgule en Python
 
 dico = {
-	"PREP" : ["A", "Derrière", "Malgré", "Sauf", "Selon", "Avant", "Devant", "Sous", "Avec", 
-			 "En", "Par", "Sur", "Entre", "Parmi", "Envers", "Pendant", "Vers", "Dans", "Pour", 
-			 "De", "Près", "Depuis", "Sans"],
 
-	"ADV"  : ['Bien', 'Vite', 'Mal', 'Beaucoup', 'Moins', 'Trop', 'Hier', 'Aujourd\'hui', 'Demain'],
+	"PREP" : ["À", "Après", "Attendu", "Au-dedans", "Au-dehors", "Au-delà", "de", "Au-dessous", "Au-dessus", 
+			  "Auprès", "Autour", "Aux" "Environ", "Avant", "Avec", "Avecque", "Centi-", "Chez", "Concernant", "Contre", 
+			  "D\'", "Dans", "De", "Depuis", "Derrière", "Des", "Devant", "Devers", "Dixit", "Durant", "Emmi", "En", 
+			  "Entre", "Envers", "Excepté", "Hormis", "Hors", "Jusque", "Jusqu", "Malgré", "Moyennant", "Nonobstant", 
+			  "Outre", "Par", "Parmi", "Passé", "Pendant", "Pico-", "Pour", "Près", "Proto-", "Quant à", "Revoici", 
+			  "Revoilà", "Rez", "Sans", "Sauf", "Selon", "Sous", "Sub", "Suivant", "Sur", "Vers", "Versus", "Via", 
+			  "Vis-à-vis", "Voici", "Voilà""A", "Derrière", "Malgré", "Sauf", "Selon", "Avant", "Devant", "Sous", 
+			  "Avec", "En", "Par", "Sur", "Entre", "Parmi", "Envers", "Pendant", "Vers", "Dans", "Pour", 
+			  "De", "Près", "Depuis", "Sans"],
 
-	"PRON" : ["Je", "J'", "Tu", "Il", "Elle", "On", "Nous", "Vous", "Ils", "Elles", "Me", "M'", "Moi", "Te", 
-			 "T'", "Toi", "Se", "Y", "Le", "Lui", "Soi", "Leur", "Eux", "Lui", "Qui", "Que", "Quoi", 
-			 "Dont", "Où"],
+	"ADV"  : ["admirablement", "ainsi", "aussi", "bien", "comme", "comment", "debout", "doucement", "également", 
+			  "ensemble", "exprès", "franco", "gratis", "impromptu", "incognito", "lentement", "mal", "mieux", "pis", "plutôt", 
+			  "presque", "recta", "vite", "volontiers", "ainsi", "à peine", "à peu près", "absolument", "demi", "assez", 
+			  "aussi", "autant", "autrement", "approximativement", "beaucoup", "carrément", "combien", "comme", "complètement", 
+			  "davantage", "à demi", "diablement", "divinement", "drôlement", "encore", "entièrement", "environ", "extrêmement", 
+			  "fort", "grandement", "guère", "infiniment", "insuffisamment", "joliment", "même", "moins", "pas mal", "passablement", 
+			  "peu", "plus", "plutôt", "presque", "prou", "quasi", "quasiment", "quelque", "rudement", "si",
+			  "suffisamment", "tant", "tellement", "terriblement", "totalement", "tout", "tout à fait", "très", "trop", "trop peu", 
+			  "tout à fait", "un peu", "alors", "après", "après-demain", "aujourd\'hui", "auparavant", "aussitôt", "autrefois", 
+			  "avant", "avant-hier", "bientôt", "cependant", "d\'abord", "déjà", "demain", "depuis", "derechef", "désormais", 
+			  "dorénavant", "encore", "enfin", "ensuite", "entre-temps", "hier", "jadis", "jamais", "longtemps", "lors", "maintenant", 
+			  "naguère", "parfois", "plus", "premièrement", "puis", "quand", "quelquefois", "sitôt", "soudain", "souvent", 
+			  "subito", "tantôt", "tard", "tôt", "toujours", "ailleurs", "alentour", "alentours", "arrière", "au-delà", "au-dessous", 
+			  "au-dessus", "au-devant", "autour", "avant", "ça", "céans", "ci", "contre", "deçà", "dedans", "dehors", "derrière",
+			  "dessous", "dessus", "devant", "ici", "là", "là-haut", "loin", "où", "outre", "partout", "près", "proche", "sus", "y", 
+			  "apparemment", "assurément", "aussi", "bien", "bon", "certainement", "certes", "en vérité", "oui", "peut-être", "précisément", 
+			  "probablement", "sans doute", "si", "soit", "tout à fait", "toutefois", "volontiers", "vraiment", "vraisemblablement", 
+			  "aucunement", "guère", "jamais", "ne", "non", "nullement", "pas", "plus", "rien"],
+
+	"PRON" : ["je", "j'" "me", "m’", "moi", "tu", "te", "t'", "toi", "nous", "vous", "il", "elle", "ils", "elles", "se", "en", "y", 
+			  "le", "la", "l’", "les", "lui", "soi", "leur", "eux", "lui", "leur", "celui", "celui-ci", "celui-là", "celle", "celle-ci", 
+			  "celle-là", "ceux", "ceux-ci", "ceux-là", "celles", "celles-ci", "celles-là", "ce", "ceci", "cela", "ça", "le mien", "le tien", 
+			  "le sien", "la mienne", "la tienne", "la sienne", "les miens", "les tiens", "les siens", "les miennes", "les tiennes", 
+			  "les siennes", "le nôtre", "le vôtre", "le leur", "la nôtre", "la vôtre", "la leur", "les nôtres", "les vôtres", "les leurs", 
+			  "qui", "que", "quoi", "dont", "où", "lequel", "auquel", "duquel", "laquelle", "à laquelle", "de laquelle", "lesquels", "auxquels", 
+			  "desquels", "lesquelles", "auxquelles", "desquelles", "qui", "que", "quoi", "qu\'est-ce", "lequel", "auquel", "duquel", "laquelle", 
+			  "à laquelle", "de laquelle", "lesquels", "auxquels", "desquels", "lesquelles", "auxquelles", "desquelles", "on", "tout", 
+			  "un", "une", "l'un", "l'une", "les uns", "les unes", "un autre", "une autre", "d'autres", "l'autre", "les autres", "aucun", "aucune", 
+			  "aucuns", "aucunes", "certains", "certaine", "certains", "certaines", "tel", "telle", "tels", "telles", "tout", "toute", "tous", 
+			  "toutes", "le même", "la même", "les mêmes", "nul", "nulle", "nuls", "nulles", "quelqu'un", "quelqu'une", "quelques uns", 
+			  "quelques unes", "personne", "autrui", "quiconque", "d'aucuns"],
 
 	"CONJ" : ["Mais", "Ou", "Et", "Donc", "Or", "Ni", "Car", "Que", "Quand", "Comme", "Si", "Lorsque", 
 			  "Quoique", "Puisque"],
@@ -168,6 +201,7 @@ def main(argv):
 	ner_object = named_entities_match(tested_text);
 	print(ner_object);
 
+	print(dico);
 	r"""
 	txt = ex.split();
 	pattern = "les";
