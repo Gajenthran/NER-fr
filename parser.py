@@ -13,6 +13,7 @@ import re
 # probabilité words
 # det != pp
 # preposition
+# enlever point virgule
 
 dico = {
 	"PREP" : ["à", "derrière", "malgré", "sauf", "selon", "avant", "devant", "sous", "avec", 
@@ -40,7 +41,7 @@ prep = ['je', 'tu', 'il', 'elle', 'nous', 'vous', 'ils', 'elles'];
 det = ['un', 'une', 'le', 'la', 'les'];
 ponctuation = ['\\.', '\\!', '\\?', '\\:', '\\;', '\\,'];
 get_det = [];
-ex = 'Les Français, c\'est-à-dire les hommes vivant en France.';
+ex = 'On est le 12/10/2019';
 
 
 def mw(words):
@@ -58,22 +59,22 @@ def mp(words):
 
 	combineWord = combineWord[:-1];
 	return "(?:" + combineWord + ")";
-
+"""
 rules = [
 	mw(prep) + "\\s+" + mw(det),
 	mw(adv) + "\\s+" + mw(det),
 	mp(ponctuation) + "\\s*" + mw(det), # (?:\!|\,|\.|\;|\?|\:|\.\.\.)\s*(?:le|la|un)\b
 	mw(pp) + "\\s+" + mw(det)
 ];
-
+"""
 forbidden_rules = [3];
-
+"""
 def matchPattern(words1, words2):
 	global rules;
 	for i in range(0, len(rules)):
 		reg = re.compile(rules[i], re.IGNORECASE);
 		print(re.findall(reg, ex));
-
+"""
 def matchSimple():
 	reg = re.compile(r"\b(?:le|la|un)\b", re.IGNORECASE);
 	print(re.findall(reg, ex));
@@ -106,19 +107,62 @@ def read_file(filename):
 		data = file.read()
 	return data
 
+rules = [
+	(r'les', "NER-les"),
+	(r"[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*", "NER-Mail"),
+	(r'(0[0-9]|1[0-9]|2[0-3]|[0-9])(?:\s*h\s*|\s*:\s*)[0-5][0-9]', "NER-Time"),
+	(r'(\d+)\s*(?:heures|heure|h|minute\w*|min|\w*seconde\w*|sec)', "NER-Time"),
+	(r'([0-2][0-9]|(3)[0-1])(?:\/|-)(((0)[0-9])|((1)[0-2]))(?:\/|-)\d{4}', "NER-Date"),
+	(r"(?:-|\+)?\d*(?:\.|,)?\d+", "NER-Number"), # en lettre
+	(r'(?<!\.\s)(?!^)\b([A-Z]\w*(?:\s+[A-Z]\w*)*)', "NER-Obj"),
+	(r'[a-z]+[A-Z0-9][a-z0-9]+[A-Za-z0-9]*', "NER-lowerCamelCase"),
+	(r'[a-z]+[A-Z0-9][a-z0-9]+[A-Za-z0-9]*', "NER-upperCamelCase")
+]
+
+def named_entities_match(text):
+	ner_object = [];
+	for rule in rules:
+		for m in re.finditer(rule[0], text):
+			ner_object.append(tuple((m.group(), rule[1])));
+		"""
+		compiled_regex = re.compile(rule[0]);
+		matched = re.findall(compiled_regex, text);
+		for match in matched:
+			ner_object.append(tuple((match.grou, rule[1])));
+		"""
+	return ner_object;
+
+
+def write_file(filename, data):
+    with open(filename, 'w') as file:
+        file.write(data)
+
+def text_to_dict(text):
+	dic = {}
+	for line in text.splitlines():
+		(key, value) = line.split(" - ");
+		dic[key] = value;
+	return dic;
+
 def main():
-	if len(argv) != 2:
-		usage(argv)
+	# if len(argv) != 2:
+	#	usage(argv)
+	# global ex;
+	# ner_object = named_entities_match(ex);
+	# print(ner_object);
 
+	trained_text = read_file("ner-object.txt");
+	trained_dic = text_to_dict(trained_text);
+	print(trained_dic);
 
-	
-	global ex;
+	"""
 	txt = ex.split();
 	pattern = "les";
 	add = "|";
 	reg_words = r"(?<!\.\s)(?!^)\b([A-Z]\w*(?:\s+[A-Z]\w*)*)|les";
 	tok = RegexpTokenizer(reg_words);
 	print(tok.tokenize(ex));
+	"""
 	# print(re.findall(ex));
 	# print(tok.tokenize(txt));
 	# t.concordance("je", width=50, lines=10)
