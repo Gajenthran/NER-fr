@@ -5,6 +5,7 @@ from nltk.tokenize.regexp import RegexpTokenizer
 from nltk.chunk import RegexpParser
 import codecs
 import os
+import sys
 import re
 
 # ponctuation
@@ -13,36 +14,30 @@ import re
 # probabilité words
 # det != pp
 # preposition
-# enlever point virgule
+# enlever point virgule en Python
 
 dico = {
-	"PREP" : ["à", "derrière", "malgré", "sauf", "selon", "avant", "devant", "sous", "avec", 
-			 "en", "par", "sur", "entre", "parmi", "envers", "pendant", "vers", "dans", "pour", 
-			 "de", "près", "depuis", "sans"],
+	"PREP" : ["A", "Derrière", "Malgré", "Sauf", "Selon", "Avant", "Devant", "Sous", "Avec", 
+			 "En", "Par", "Sur", "Entre", "Parmi", "Envers", "Pendant", "Vers", "Dans", "Pour", 
+			 "De", "Près", "Depuis", "Sans"],
 
-	"ADV"  : ['bien', 'vite', 'mal', 'beaucoup', 'moins', 'trop', 'hier', 'aujourd\'hui', 'demain'],
+	"ADV"  : ['Bien', 'Vite', 'Mal', 'Beaucoup', 'Moins', 'Trop', 'Hier', 'Aujourd\'hui', 'Demain'],
 
-	"PRON" : ["je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles", "me", "m'", "moi", "te", 
-			 "t'", "toi", "se", "y", "le", "lui", "soi", "leur", "eux", "lui", "qui", "que", "quoi", 
-			 "dont" "où"],
+	"PRON" : ["Je", "J'", "Tu", "Il", "Elle", "On", "Nous", "Vous", "Ils", "Elles", "Me", "M'", "Moi", "Te", 
+			 "T'", "Toi", "Se", "Y", "Le", "Lui", "Soi", "Leur", "Eux", "Lui", "Qui", "Que", "Quoi", 
+			 "Dont", "Où"],
 
-	"CONJ" : ["mais", "ou", "et", "donc", "or", "ni", "car", "que", "quand", "comme", "si", "lorsque", 
-			  "quoique", "puisque"],
+	"CONJ" : ["Mais", "Ou", "Et", "Donc", "Or", "Ni", "Car", "Que", "Quand", "Comme", "Si", "Lorsque", 
+			  "Quoique", "Puisque"],
 
-	"DET" : ["le", "la", "les", "l'", "un", "une", "des", "d'", "du", "de", "au", "aux", "ce", "cet", 
-			"cette", "ces", "mon", "son", "ma", "ta", "sa", "mes", "ses", "notre", "votre", "leur", 
-			"nos", "vos", "leurs", "aucun", "aucune", "aucuns", "tel", "telle", "tels", "telles", 
-			"tout", "toute", "tous", "toutes", "chaque"]
+	"DET" : ["Le", "La", "Les", "L'", "Un", "Une", "Des", "D'", "Du", "De", "Au", "Aux", "Ce", "Cet", 
+			"Cette", "Ces", "Mon", "Son", "Ma", "Ta", "Sa", "Mes", "Ses", "Notre", "Votre", "Leur", 
+			"Nos", "Vos", "leurs", "Aucun", "Aucune", "Aucuns", "Tel", "Telle", "Tels", "Telles", 
+			"Tout", "Toute", "Tous", "Toutes", "Chaque"]
 };
 
-adv = ['bien', 'vite', 'mal', 'beaucoup', 'moins', 'trop', 'hier', 'aujourd\'hui', 'demain'];
-pp = ['je', 'tu', 'il', 'elle', 'nous', 'vous', 'ils', 'elles'];
-prep = ['je', 'tu', 'il', 'elle', 'nous', 'vous', 'ils', 'elles'];
-det = ['un', 'une', 'le', 'la', 'les'];
 ponctuation = ['\\.', '\\!', '\\?', '\\:', '\\;', '\\,'];
-get_det = [];
 ex = 'On est le 12/10/2019';
-
 
 def mw(words):
 	combineWord = "";
@@ -99,7 +94,7 @@ def freq_word(words):
 	print(freq);
 
 def usage(argv):
-	print("Usage: " + str(argv[0]) + " <source.txt>")
+	print("Usage: " + str(argv[0]) + " <trained_text> <source>")
 	sys.exit()
 
 def read_file(filename):
@@ -107,14 +102,29 @@ def read_file(filename):
 		data = file.read()
 	return data
 
+def lst_exprs(expressions):
+	reg = r'';
+	for expr in expressions:
+		reg += r'\b(' + expr + r')\b|';
+	reg = reg[:-1];
+	return reg;
+
+ponctuation = r'(?:—|-|\.|!|\?|«|"|\')';
+gram_words = lst_exprs(dico["DET"])  + r'|' + \
+			 lst_exprs(dico["CONJ"]) + r'|' + \
+			 lst_exprs(dico["ADV"])  + r'|' + \
+			 lst_exprs(dico["PRON"]) + r'|' + \
+			 lst_exprs(dico["PREP"]);
+
 rules = [
-	(r'les', "NER-les"),
 	(r"[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*", "NER-Mail"),
 	(r'(0[0-9]|1[0-9]|2[0-3]|[0-9])(?:\s*h\s*|\s*:\s*)[0-5][0-9]', "NER-Time"),
 	(r'(\d+)\s*(?:heures|heure|h|minute\w*|min|\w*seconde\w*|sec)', "NER-Time"),
+	(r'(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?', "NER-URL"),
 	(r'([0-2][0-9]|(3)[0-1])(?:\/|-)(((0)[0-9])|((1)[0-2]))(?:\/|-)\d{4}', "NER-Date"),
 	(r"(?:-|\+)?\d*(?:\.|,)?\d+", "NER-Number"), # en lettre
-	(r'(?<!\.\s)(?!^)\b([A-Z]\w*(?:\s+[A-Z]\w*)*)', "NER-Obj"),
+	# (r'(?<!' + ponctuation + r'(?!^)\b([A-Z]\w*(?:\s+[A-Z]\w*)*)', "NER-Obj"),
+	(r"(?=[A-Z]\w*(?:\s+[A-Z]\w*)*)(?!" + gram_words + r")(?:[A-Z]\w*(?:\s+[A-Z]\w*)*)", "NER-Obj"),
 	(r'[a-z]+[A-Z0-9][a-z0-9]+[A-Za-z0-9]*', "NER-lowerCamelCase"),
 	(r'[a-z]+[A-Z0-9][a-z0-9]+[A-Za-z0-9]*', "NER-upperCamelCase")
 ]
@@ -124,12 +134,14 @@ def named_entities_match(text):
 	for rule in rules:
 		for m in re.finditer(rule[0], text):
 			ner_object.append(tuple((m.group(), rule[1])));
-		"""
-		compiled_regex = re.compile(rule[0]);
-		matched = re.findall(compiled_regex, text);
-		for match in matched:
-			ner_object.append(tuple((match.grou, rule[1])));
-		"""
+
+
+	"""
+	compiled_regex = re.compile(rule[0]);
+	matched = re.findall(compiled_regex, text);
+	for match in matched:
+		ner_object.append(tuple((match.group(), rule[1])));
+	"""
 	return ner_object;
 
 
@@ -144,18 +156,19 @@ def text_to_dict(text):
 		dic[key] = value;
 	return dic;
 
-def main():
-	# if len(argv) != 2:
-	#	usage(argv)
-	# global ex;
-	# ner_object = named_entities_match(ex);
-	# print(ner_object);
-
-	trained_text = read_file("ner-object.txt");
+def main(argv):
+	if len(argv) != 3:
+		usage(argv)
+	
+	trained_text = read_file(argv[1]);
 	trained_dic = text_to_dict(trained_text);
-	print(trained_dic);
+	# print(trained_dic);
 
-	"""
+	tested_text = read_file(argv[2]);
+	ner_object = named_entities_match(tested_text);
+	print(ner_object);
+
+	r"""
 	txt = ex.split();
 	pattern = "les";
 	add = "|";
@@ -169,4 +182,4 @@ def main():
 	# matchPattern(adv, det);
 
 if __name__ == '__main__':
-	main()
+	main(sys.argv)
