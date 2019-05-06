@@ -1,0 +1,992 @@
+NER-Loc
+Guadeloupe
+Martinique
+Guyane
+La Mayotte
+Bourgogne
+Normandie
+Bretagne
+Nouvelle
+Occitanie
+Auvergne
+Provence
+Corse
+Ain
+Aisne
+Allier
+Aix-en-Provence
+Amiens
+Angers
+Abbeville
+Agde
+Agen
+Aix-en-Provence
+Aix-les-Bains
+Ajaccio
+Albi
+Alençon
+Alfortville
+Alès
+Amiens
+Angers
+Anglet
+Angoulême
+Annecy
+Annemasse
+Antibes Juan-les-Pins
+Antony
+Argenteuil
+Arles
+Armentières
+Arras
+Asnières-sur-Seine
+Athis-Mons
+Aubagne
+Aubervilliers
+Auch
+Aulnay-sous-Bois
+Aurillac
+Auxerre
+Avignon
+Bagneux
+Bagnolet
+Bastia
+Bayonne
+Beaune
+Beauvais
+Belfort
+Bergerac
+Besançon
+Bezons
+Biarritz
+Blagnac
+Blois
+Bobigny
+Bois-Colombes
+Bordeaux
+Boulogne-Billancourt
+Boulogne-sur-Mer
+Bourg-en-Bresse
+Bourges
+Bourgoin-Jallieu
+Brest
+Brive-la-Gaillarde
+Bron
+Bruay-la-Buissière
+Brunoy
+Brétigny-sur-Orge
+Bègles
+Béthune
+Béziers
+Cachan
+Caen
+Cagnes-sur-Mer
+Cahors
+Calais
+Caluire-et-Cuire
+Cambrai
+Cannes
+Carcassonne
+Carpentras
+Castres
+Cavaillon
+Cayenne
+Cenon
+Cergy
+Chalon-sur-Saône
+Chambéry
+Champigny-sur-Marne
+Champs-sur-Marne
+Charenton-le-Pont
+Charleville-Mézières
+Chartres
+Chatou
+Chaumont
+Chelles
+Cherbourg-Octeville
+Choisy-le-Roi
+Châlons-en-Champagne
+Châteauroux
+Châtellerault
+Châtenay-Malabry
+Châtillon
+Clamart
+Clermont-Ferrand
+Clichy
+Clichy-sous-Bois
+Colmar
+Colombes
+Colomiers
+Combs-la-Ville
+Compiègne
+Conflans-Sainte-Honorine
+Corbeil-Essonnes
+Coudekerque-Branche
+Courbevoie
+Creil
+Croix
+Créteil
+Dammarie-lès-Lys
+Denain
+Deuil-la-Barre
+Dieppe
+Dijon
+Dole
+Douai
+Draguignan
+Drancy
+Draveil
+Dunkerque
+Décines-Charpieu
+Eaubonne
+Ermont
+Fleury-les-Aubrais
+Fontaine
+Fontenay-aux-Roses
+Fontenay-sous-Bois
+Forbach
+Fougères
+Franconville
+Fresnes
+Frontignan
+Fréjus
+Fécamp
+Gagny
+Gap
+Garges-lès-Gonesse
+Gennevilliers
+Gif-sur-Yvette
+Gonesse
+Goussainville
+Gradignan
+Grande-Synthe
+Grasse
+Grenoble
+Grigny
+Guyancourt
+Haguenau
+Hazebrouck
+Herblay
+Houilles
+Hyères
+Hénin-Beaumont
+Hérouville-Saint-Clair
+Illkirch-Graffenstaden
+Issy-les-Moulineaux
+Istres
+Ivry-sur-Seine
+Joué-lès-Tours
+La Celle Saint-Cloud
+La Ciotat
+La Courneuve
+La Garde
+La Garenne-Colombes
+La Madeleine
+La Possession
+La Roche-sur-Yon
+La Rochelle
+La Seyne-sur-Mer
+La Teste-de-Buch
+La Valette-du-Var
+Lambersart
+Lanester
+Laon
+Laval
+Le Blanc-Mesnil
+Le Bouscat
+Le Cannet
+Le Chesnay
+Le Creusot
+Le Grand-Quevilly
+Le Havre
+Le Kremlin-Bicêtre
+Le Mans
+Le Mée-sur-Seine
+Le Perreux-sur-Marne
+Le Petit-Quevilly
+Le Plessis-Robinson
+Le Port
+Le Tampon
+Lens
+Les Lilas
+Les Ulis
+Levallois-Perret
+Libourne
+Lille
+Limoges
+Lisieux
+Livry-Gargan
+Liévin
+Longjumeau
+Loos
+Lorient
+Lormont
+Lunel
+Lunéville
+Lyon
+Maisons-Alfort
+Maisons-Laffitte
+Malakoff
+Manosque
+Mantes-la-Jolie
+Marcq-en-Baroeul
+Marignane
+Marseille
+Martigues
+Massy
+Maubeuge
+Meaux
+Melun
+Menton
+Metz
+Meudon
+Meyzieu
+Millau
+Miramas
+Mons-en-Baroeul
+Mont-Saint-Aignan
+Mont-de-Marsan
+Montauban
+Montbéliard
+Montfermeil
+Montgeron
+Montigny-le-Bretonneux
+Montigny-lès-Metz
+Montluçon
+Montmorency
+Montpellier
+Montreuil
+Montrouge
+Montélimar
+Moulins
+Muret
+Mâcon
+Mérignac
+Nancy
+Nanterre
+Nantes
+Narbonne
+Neuilly-sur-Marne
+Neuilly-sur-Seine
+Nevers
+Nice
+Niort
+Nogent-sur-Marne
+Noisy-le-Grand
+Noisy-le-Sec
+Nîmes
+Olivet
+Orange
+Orly
+Orléans
+Orvault
+Oullins
+Oyonnax
+Ozoir-la-Ferrière
+Pantin
+Paris
+Pau
+Pessac
+Pierrefitte-sur-Seine
+Plaisir
+Poissy
+Poitiers
+Pontault-Combault
+Pontoise
+Puteaux
+Périgueux
+Quimper
+Reims
+Rennes
+Rezé
+Rillieux-la-Pape
+Ris-Orangis
+Roanne
+Rochefort
+Rodez
+Romainville
+Romans-sur-Isère
+Rosny-sous-Bois
+Roubaix
+Rouen
+Rueil-Malmaison
+Saint-André
+Saint-Benoît
+Saint-Brieuc
+Saint-Chamond
+Saint-Cloud
+Saint-Denis
+Saint-Dizier
+Saint-Dié-des-Vosges
+Saint-Germain-en-Laye
+Saint-Herblain
+Saint-Joseph
+Saint-Laurent-du-Var
+Saint-Leu
+Saint-Louis
+Saint-Malo
+Saint-Martin-d'Hères
+Saint-Maur-des-Fossés
+Saint-Michel-sur-Orge
+Saint-Médard-en-Jalles
+Saint-Nazaire
+Saint-Ouen
+Saint-Paul
+Saint-Pierre
+Saint-Pol-sur-Mer
+Saint-Priest
+Saint-Quentin
+Saint-Raphaël
+Saint-Sébastien-sur-Loire
+Saint-Étienne
+Saint-Étienne-du-Rouvray
+Sainte-Foy-lès-Lyon
+Sainte-Geneviève-des-Bois
+Saintes
+Salon-de-Provence
+Sannois
+Sarcelles
+Sarreguemines
+Sartrouville
+Saumur
+Savigny-le-Temple
+Savigny-sur-Orge
+Schiltigheim
+Sedan
+Sens
+Sevran
+Six-Fours-les-Plages
+Soissons
+Sotteville-lès-Rouen
+Stains
+Strasbourg
+Sucy-en-Brie
+Suresnes
+Sète
+Sèvres
+Talence
+Tarbes
+Taverny
+Thiais
+Thionville
+Thonon-les-Bains
+Torcy
+Toulon
+Toulouse
+Tourcoing
+Tournefeuille
+Tours
+Trappes
+Tremblay-en-France
+Troyes
+Valence
+Valenciennes
+Vallauris
+Vandoeuvre-lès-Nancy
+Vannes
+Vanves
+Vaulx-en-Velin
+Vernon
+Versailles
+Vertou
+Vichy
+Vierzon
+Vigneux-sur-Seine
+Villefranche-sur-Saône
+Villejuif
+Villemomble
+Villenave-d'Ornon
+Villeneuve-Saint-Georges
+Villeneuve-d'Ascq
+Villeneuve-la-Garenne
+Villeneuve-sur-Lot
+Villeparisis
+Villepinte
+Villeurbanne
+Villiers-le-Bel
+Villiers-sur-Marne
+Vincennes
+Viry-Châtillon
+Vitrolles
+Vitry-sur-Seine
+Voiron
+Vélizy-Villacoublay
+Vénissieux
+Wattrelos
+Yerres
+Échirolles
+Élancourt
+Épernay
+Épinal
+Épinay-sur-Seine
+Étampes
+Évreux
+Évry
+Besançon
+Bordeaux
+Boulogne-Billancourt
+Brest
+Caen
+Clermont-Ferrand
+Dijon
+Grenoble
+Le Havre
+Le Mans
+Lille
+Limoges
+Lyon
+Marseille
+Metz
+Montpellier
+Montreuil
+Nancy
+Nanterre
+Nantes
+Nice
+Nîmes
+Orléans
+Paris
+Reims
+Rennes
+Rouen
+Saint-Étienne
+Strasbourg
+Toulon
+Toulouse
+Tours
+Villeurbanne
+Alpes de Haute Provence
+Hautes-Alpes
+Alpes-Maritimes
+Ardèche
+Ardennes
+Ariège
+Aube
+Aude
+Aveyron
+Bouches du Rhône
+Calvados
+Cantal
+Charente
+Charente Maritime
+Cher
+Corrèze
+Côte-d'Or
+Côtes-d'Armor
+Creuse
+Dordogne
+Doubs
+Drôme
+Eure
+Eure-et-Loir
+Finistère
+Corse-du-Sud
+Haute-Corse
+Gard
+Haute-Garonne
+Gers
+Gironde
+Hérault
+Ille-et-Vilaine
+Indre
+Indre-et-Loire
+Isère
+Jura
+Landes
+Loir-et-Cher
+Loire
+Haute-Loire
+Loire-Atlantique
+Loiret
+Lot
+Lot-et-Garonne
+Lozère
+Maine-et-Loire
+Manche
+Marne
+Haute-Marne
+Mayenne
+Meurthe-et-Moselle
+Meuse
+Morbihan
+Moselle
+Nièvre
+Nord
+Oise
+Orne
+Pas-de-Calais
+Puy-de-Dôme
+Pyrénées Atlantiques
+Hautes-Pyrénées
+Pyrénées-Orientales
+Bas-Rhin
+Haut-Rhin
+Rhône
+Haute-Saône
+Saône-et-Loire
+Sarthe
+Savoie
+Haute-Savoie
+Paris
+Seine-Maritime
+Seine-et-Marne
+Yvelines
+Deux-Sèvres
+Somme
+Tarn
+Tarn-et-Garonne
+Var
+Vaucluse
+Vendée
+Vienne
+Haute-Vienne
+Vosges
+Yonne
+Territoire de Belfort
+Essonne
+Hauts-de-Seine
+Seine Saint Denis
+Val-de-Marne
+Val-d'Oise
+Guadeloupe
+Martinique
+Guyane
+La Réunion
+Abbasid Caliphate
+Afghanistan
+Åland
+Albania
+Algeria
+American Samoa
+Ancient Cilicia
+Ancient Greece
+Ancient Thebes
+Andorra
+Angola
+Anguilla
+Antarctica
+Antigua and Barbuda
+Argentina
+Armenia
+Armenian SSR
+Aruba
+Ashmore and Cartier Islands
+Assyria
+Australia
+Austrasia
+Austria
+Austria-Hungary
+Austrian Empire
+Azerbaijan
+Babylonia
+Baden
+Bahrain
+Bangladesh
+Barbados
+Barcelona
+Bavaria
+Belarus
+Belarusian National Republic
+Belgium
+Belize
+Benin
+Bermuda
+Bhutan
+Bolivia
+Bosnia and Herzegovina
+Botswana
+Bouvet Island
+Brazil
+Brazilian Empire
+British West Indies
+Brunei
+Bulgaria
+Burkina Faso
+Burundi
+Byzantine Empire
+Caliphate of Córdoba
+Cambodia
+Cameroon
+Canada
+Cape Verde
+Cayman Islands
+Central African Republic
+Central Tibetan Administration
+Chad
+Channel Islands
+Chechen Republic of Ichkeria
+Chile
+China
+Classical Athens
+Clipperton Island
+Cocos Islands
+Colombia
+Comoros
+Confederate States of America
+Cook Islands
+Coral Sea Islands
+Costa Rica
+Côte d'Ivoire
+Croatia
+Crown Council of Ethiopia
+Crown of Aragon
+Cuba
+Cyprus
+Czechoslovakia
+Czech Republic
+Dahomey
+Democratic Republic of the Congo
+Denmark
+Deutsches Reich
+Différance
+Djibouti
+Dominica
+Dominican Republic
+Duchy of Burgundy
+Duchy of Normandy
+Dutch Republic
+East Timor
+Ecuador
+Egypt
+Electorate of Hanover
+El Salvador
+Emirate of Sicily
+Empire of Japan
+England
+Equatorial Guinea
+Eritrea
+Estonia
+Ethiopia
+Faroe Islands
+Federal Republic of Yugoslavia
+Federated States of Micronesia
+Federation of Malaya
+Fiji
+Finland
+First French Empire
+Former Liang
+Former Qin
+Former Yan
+France
+Frankish Empire
+French First Republic
+French Guiana
+French Polynesia
+Gabon
+Gaza Strip
+Georgia
+Georgian SSR
+German Democratic Republic
+German Empire
+Germany
+Ghana
+Gibraltar
+Glorioso Islands
+Government of Abkhazia-in-exile
+Grand Duchy of Finland
+Grand Duchy of Frankfurt
+Grand Duchy of Hesse
+Grand Duchy of Kraków
+Grand Duchy of Lithuania
+Grand Duchy of Poznań
+Grand Duchy of Tuscany
+Grand Duchy of Würzburg
+Greater Khorasan
+Great Moravia
+Great Seljuq Empire
+Greece
+Greenland
+Grenada
+Guadeloupe
+Guam
+Guatemala
+Guinea
+Guinea-Bissau
+Guyana
+Haiti
+Hawaii
+Herm
+Holy Roman Empire
+Holy See
+Honduras
+Hong Kong
+Hungary
+Iceland
+Independent Republic of Zulia
+India
+Inde
+Indonesia
+Iran
+Iraq
+Iraqi Kurdistan
+Islamic Emirate of Afghanistan
+Isle of Man
+Israel
+Italy
+Italie
+Iudaea
+Jamaica
+Jammu and Kashmir
+Japan
+Jersey
+Johnston Atoll
+Jordan
+Judea
+Kazakhstan
+Kenya
+Kievan Rus'
+Kingdom of Albania
+Kingdom of Aragon
+Kingdom of Bavaria
+Kingdom of Bohemia
+Kingdom of Bulgaria
+Kingdom of Croatia-Slavonia
+Kingdom of England
+Kingdom of France
+Kingdom of Galicia
+Kingdom of Great Britain
+Kingdom of Greece
+Kingdom of Hanover
+Kingdom of Hawaii
+Kingdom of Hungary
+Kingdom of Iraq
+Kingdom of Ireland
+Kingdom of Italy
+Kingdom of Judah
+Kingdom of Montenegro
+Kingdom of Naples
+Kingdom of Navarre
+Kingdom of Prussia
+Kingdom of Romania
+Kingdom of Scotland
+Kingdom of Serbia
+Kingdom of Sicily
+Kingdom of the Lombards
+Kingdom of Travancore
+Kingdom of Yugoslavia
+Kiribati
+Korea
+Kosovo
+Kuwait
+Kyrgyzstan
+Laos
+Latvia
+Lebanon
+Lesotho
+Liberia
+Libya
+Liechtenstein
+Lithuania
+Lordship of Ireland
+Luxembourg
+Macau
+Macedon
+Madagascar
+Majapahit
+Malacca Sultanate
+Malawi
+Malaysia
+Maldives
+Mali
+Malta
+Marshall Islands
+Martinique
+Mataram Kingdom
+Mataram Sultanate
+Mauritania
+Mauritius
+Mayotte
+Mecklenburg-Schwerin
+Mecklenburg-Strelitz
+Mercia
+Mesopotamia
+Mexico
+Moldova
+Monaco
+Mongol Empire
+Mongolia
+Montenegro
+Monterrey
+Montserrat
+Morocco
+Mozambique
+Muscovy
+Myanmar
+Mygdonian
+Namibia
+Nauru
+Navassa Island
+Nazi Germany
+Nepal
+Netherlands
+Netherlands Antilles
+Neustria
+New Caledonia
+New France
+New Kingdom
+New Zealand
+Nicaragua
+Niger
+Nigeria
+Niue
+Norfolk Island
+Northern Cyprus
+Northern Ireland
+Northern Mariana Islands
+North Korea
+Northland State
+Norway
+Oldenburg
+Oman
+Ottoman Empire
+Pahlavi dynasty
+Pakistan
+Palau
+Palestine
+Palestinian National Authority
+Palestinian territories
+Panama
+Papal States
+Papua New Guinea
+Paracel Islands
+Paraguay
+Peru
+Philippines
+Pitcairn Islands
+Poland
+Portugal
+Principality of Montenegro
+Principality of Wales
+Provisional Administrative Entity of South Ossetia
+Ptolemaic Egypt
+Ptolemaic Kingdom
+Puerto Rico
+Puntland
+Qatar
+Québec
+Rain
+Rankan
+Rashidun Caliphate
+Republic of Cabinda
+Republic of China
+Republic of Genoa
+Republic of Hawaii
+Republic of Ireland
+Republic of Macedonia
+Republic of Serbian Krajina Government in Exile
+Republic of South Vietnam
+Republic of the Congo
+Republic of the South Moluccas
+Republic of Upper Volta
+Republic of Venice
+Réunion Island
+Rhodesia
+Roman Empire
+Romania
+Roman Republic
+Rome
+Royal Lao Government in Exile
+Russia
+Russian Empire
+Russian Provisional Government
+Russian Soviet Federative Socialist Republic
+Rwanda
+Sahrawi Arab Democratic Republic
+Saint Kitts and Nevis
+Saint Lucia
+Saint Martin
+Saint-Pierre and Miquelon
+Saint Vincent and the Grenadines
+Samoa
+San Marino
+São Tomé and Príncipe
+Saudi Arabia
+Saxe-Weimar-Eisenach
+Scotland
+Second Polish Republic
+Senegal
+Serbia
+Serbia and Montenegro
+Serbian Principality
+Seychelles
+Sierra Leone
+Singapore
+Slovakia
+Slovak Republic
+Slovenia
+Solomon Islands
+Somalia
+Somaliland
+Song Dynasty
+South Africa
+Southern Rhodesia
+South Georgia and the South Sandwich Islands
+South Korea
+Soviet Union
+Spain
+Spanish Empire
+Sparta
+Squamish Nation
+Sri Lanka
+Srivijaya
+Sudan
+Surakarta Sultanate
+Suriname
+Svalbard and Jan Mayen
+Swaziland
+Sweden
+Swedish Empire
+Switzerland
+Syria
+Taiwan
+Tajikistan
+Tamil Nadu
+Tanzania
+Territory of New Guinea
+Territory of Papua and New Guinea
+Thailand
+The Bahamas
+Theban
+The Gambia
+Tibet
+Tír Eógain
+Togo
+Tokelau
+Tonga
+Transitional Darfur Regional Authority
+Trinidad and Tobago
+Tunisia
+Turkey
+Turkmenistan
+Turks and Caicos Islands
+Tuvalu
+Two Sicilies
+Tyse
+Uganda
+Ukraine
+Union between Sweden and Norway
+Union of South Africa
+United Arab Emirates
+United Arab Republic
+United Kingdom
+United States of America
+United States Virgin Islands
+Uruguay
+Uzbekistan
+Vanuatu
+Venezuela
+Vietnam
+Wales
+Wallachia
+Wallis and Futuna
+Weimar Republic
+Wessex
+West Bank
+Western Roman Empire
+Western Sahara
+West Germany
+Yemen
+Yugoslavia
+Zaire
+Zambia
+Zimbabwe
