@@ -67,16 +67,6 @@ dico = {
     'Aucuns', 'Tel', 'Telle', 'Tels', 'Telles', 'Tout', 'Toute', 'Tous', 'Toutes', 'Chaque']
 };
 
-ex = 'On est le 12/10/2019';
-
-"""
-def clean_trained_dict(dic):
-    words = list(set(dic["NER-Sugg"]));
-    dic["NER-Sugg"] = words;
-    return dic;
-"""
-
-
 def usage(argv):
     print("Usage: " + str(argv[0]) + " <model_txt> <test_txt> <tagged_txt>")
     sys.exit()
@@ -88,36 +78,14 @@ def main(argv):
     test_text = Util.read_file(argv[2])
 
     ner = NER(test_text)
-    ner.create(["data/person.txt", "data/location.txt", "data/movie.txt"])
+    ner.create(["data/person.txt", "data/location.txt", "data/movie.txt", "data/sugg.txt", "data/others.txt"])
     ner.match()
-    ner.rm_duplicate()
+    # ner.rm_duplicate()
+    # ner.add_to_dic()
+    # print(ner.get_words())
 
     tagger = Tagger(ner.get_words(), test_text);
     tagger.tag(argv[3])
-
-
-
-    """
-    train = Train()
-    train.trainModels((["data/person.txt", "data/location.txt", "data/movie.txt"]))
-    trained_dic = trainModels(["data/person.txt", "data/location.txt", "data/movie.txt"])
-    # print(trained_dic);
-
-    tested_text = read_file(argv[2]);
-    ner_object = named_entities_match(tested_text);
-    ner_object = ne_rm_duplicate(ner_object);
-    """
-    
-    # trained_dic = clean_trained_dict(trained_dic);
-    # write_file("ner-object.txt", dict_to_text(trained_dic));
-    # print(ner_object);
-    # print(ner_object)
-    # print(txt_to_xml(tested_text, ner_object));
-
-    # print(re.findall(ex));
-    # print(tok.tokenize(txt));
-    # t.concordance("je", width=50, lines=10)
-    # matchPattern(adv, det);
 
 if __name__ == '__main__':
     main(sys.argv)

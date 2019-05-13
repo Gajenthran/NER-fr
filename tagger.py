@@ -10,7 +10,7 @@ class Tagger:
 
 		# balise ouvrante
 		position = start + ne[2]
-		tag = '<NER cat=' + ne[1] + '>'
+		tag = '<NER cat="' + ne[1] + '">'
 		source = source[:position] + tag + source[position:]
 		position = ne[3] + start + len(tag)
 

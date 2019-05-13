@@ -9,7 +9,7 @@ class Util:
 		return data
 
 	@staticmethod
-	def text_to_dict(text):
+	def text_to_dic(text):
 		dic = {}
 		for line in text.splitlines():
 			(key, value) = line.split(" : ")
@@ -18,10 +18,10 @@ class Util:
 		return dic
 
 	@staticmethod
-	def dict_to_text(dic):
+	def dic_to_text(dic):
 		text = ""
 		for key, value in dic.items():
-			text += key + " : " + ', '.join(value) + "\n"
+			text += key + "\n" + '\n'.join(value)
 		return text
 
 	@staticmethod
@@ -31,7 +31,7 @@ class Util:
 
 
 	@staticmethod
-	def to_regex(expressions):
+	def to_rgx(expressions):
 	    reg = r'';
 	    for expr in expressions:
 	        reg += r'\b(' + expr + r')\b|';
