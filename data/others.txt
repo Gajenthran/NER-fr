@@ -1,0 +1,2 @@
+NER-Day : Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi, Dimanche
+NER-Month : Janvier, Février, Fevrier, Mars, Avril, Mai, Juin, Juillet, Août, Aout, Septembre, Octobre, Novembre, Décembre, Decembre
