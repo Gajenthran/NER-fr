@@ -38,6 +38,45 @@ class Util:
 	    reg = reg[:-1];
 	    return reg;
 
+	@staticmethod
+	def prioritize_obj(lst):
+		i = 0
+		length = len(lst)
+		while i < length:
+			j = i + 1
+			if not(j < length): break
+			if lst[j][1] != "NER-Obj":
+				while j < length:
+					if lst[j][2] == lst[i][2] and lst[j][3] == lst[i][3]:
+						lst[i] = 0
+					j += 1
+			i += 1
+
+		lst = Util.rm_duplicate(lst)
+		return lst
+
+	@staticmethod
+	def rm_duplicate(lst):
+		i = 0
+		n = 0
+		length = len(lst)
+		while i < length:
+			if lst[i] == n:
+				lst.remove(lst[i])
+				length = length -1  
+				continue
+			i = i+1
+
+		return lst
+
+	def sort_ner(lst):
+		for element in lst:
+			if element[1] == "NER-Obj":
+				lst.remove(element)
+				lst.insert(0, element)
+		return lst
+
+	@staticmethod
 	def transform_text(text):
 		text = text.replace("(" , " ( ")
 		text = text.replace(")" , " ) ")
@@ -48,6 +87,7 @@ class Util:
 		text = text.replace(", ", " , ")
 		return text
 
+	@staticmethod
 	def detransform_text(text):
 		text = text.replace("' "   , "'")
 		text = text.replace(" , "  , ", ")

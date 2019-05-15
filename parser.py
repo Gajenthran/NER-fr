@@ -3,21 +3,40 @@ import re
 
 class Parser:
 	GRAMMAR = """
-		NER-Obj: 
-			{<NER-Obj|NPP>+}
+		NER-Money:
+			{<NER-Number> <NC|N>* <Lmoney>}
+
+		NER-Month:
+			{<Lmonth>}
+
+		NER-Day:
+			{<Lday>}
+
+		NER-Acronym:
+			{<Lacronym>}
+
+		NER-URL:
+			{<Lurl>}
+
+		NER-Mail:
+			{<Lmail>}
 
 		NER-Number: 
 			{<Lnumber>+}
 
-		Ploc:
+		NER-Obj:
+			{<Lobj|NPP>+ <NER-Number>}
+			{<Lobj|NPP>+}
+
+		NER-Loc:
 			{<NER-Number> <Lloc> <P>* <DET>* <NER-Obj>}
 			{<Lloc> <P>* <DET>* <NER-Obj>}
 
-		Ppers:
-			{<DET>* <ADJ>* <Lperson> <ADJ>* (<P> <DET>* <NPP|NC|N|NER-Obj|Ploc> <CC>* <Lcom>*)* <ADJ>* <Lcom>? <NER-Obj>}
+		NER-Person:
+			{<DET>* <ADJ>* <Lperson> <ADJ>* (<P> <DET>* <NER-Obj|NER-Loc>+ <CC>* <Lcom>*)* <ADJ>* <Lcom>? <NER-Obj>}
 			{<DET>* <ADJ>* <Lperson> <ADJ>* <Lcom>? <NER-Obj>}
 		
-		Porg:
+		NER-Org:
 			{<Lorg> <P>* <NER-Obj>}
 			{<NER-Obj> <Lorg>}
 
@@ -25,24 +44,7 @@ class Parser:
 			{<DET>? <NER-Day|NC> <NER-Number> <NER-Month> <NER-Number>?}
 			{<DET>? <NER-Number> <NER-Month|NC> <NER-Number>}
 			{<DET>? <NER-Number> <NER-Month>}
-
-		NER-Money:
-			{<NER-Number> <NC|N>* <Lmoney>}
-
-		NER-Day:
-			{<NER-Day>}
-
-		NER-Month:
-			{<NER-Month>}
-
-		NER-Acronym:
-			{<NER-Acronym>}
-
-		NER-URL:
-			{<NER-URL>}
-
-		NER-Mail:
-			{<NER-Mail>}
+			{<Ldate>}
 	"""
 
 	def __init__(self, tokens):

@@ -56,7 +56,6 @@ class Tagger:
 		end = 0
 		for ne in self.named_entities:
 			pos = ne[2] + beg
-			print(pos)
 			if end > ne[2]: continue
 			if not(self.subtag(self.tagged_text, pos)):
 				self.tagged_text, end = self.insert_tag(self.tagged_text, beg, ne)
