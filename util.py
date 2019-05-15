@@ -37,3 +37,23 @@ class Util:
 	        reg += r'\b(' + expr + r')\b|';
 	    reg = reg[:-1];
 	    return reg;
+
+	def transform_text(text):
+		text = text.replace("(" , " ( ")
+		text = text.replace(")" , " ) ")
+		text = text.replace("{" , " { ")
+		text = text.replace("}" , " } ")
+		text = text.replace("\"", " \" ")
+		text = text.replace("'", "' ")
+		text = text.replace(", ", " , ")
+		return text
+
+	def detransform_text(text):
+		text = text.replace("' "   , "'")
+		text = text.replace(" , "  , ", ")
+		text = text.replace(" ( " , "(")
+		text = text.replace(" ) " , ")")
+		text = text.replace(" { " , "{")
+		text = text.replace(" } " , "}")
+		text = text.replace(" \" ", "\"")
+		return text	

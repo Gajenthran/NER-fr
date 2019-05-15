@@ -5,6 +5,7 @@ class Tagger:
 		self.tagged_text = text
 		# entity(word, object, start, end)
 		self.named_entities = named_entities
+		self.notag = True
 
 	def insert_tag(self, source, start, ne):
 
@@ -32,10 +33,14 @@ class Tagger:
 			:param source: le fichier source
 			:param position: position à laquelle nous devons ajouter la balise ouvrante
 		"""
+		if self.notag == True:
+			self.notag = False
+			return False
+
 		i = position
 		while i > 0 and (source[i] != '<' or (source[i] == '<' and source[i + 1] == ' ')):
 			i -= 1
-		if(source[i + 1] == '/' or i == 0):
+		if((source[i] == '<' and source[i + 1] == '/')):
 			return False
 		return True
 
@@ -48,10 +53,15 @@ class Tagger:
 			:param txt: fichier texte       
 		"""
 		beg = 0
+		end = 0
 		for ne in self.named_entities:
 			pos = ne[2] + beg
+			print(pos)
+			if end > ne[2]: continue
 			if not(self.subtag(self.tagged_text, pos)):
 				self.tagged_text, end = self.insert_tag(self.tagged_text, beg, ne)
 				beg += end
+				end = ne[3]
 
+		self.tagged_text = Util.detransform_text(self.tagged_text)
 		Util.write_file(dest_file, self.tagged_text)

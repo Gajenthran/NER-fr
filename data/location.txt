@@ -9,6 +9,8 @@ Algérie
 Alger
 Allemagne
 Berlin
+Square
+Street
 Andorre
 Andorre-la-Vieille
 Angola
