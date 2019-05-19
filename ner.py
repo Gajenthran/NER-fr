@@ -12,13 +12,12 @@ class NER:
 		"""
 			Vérifie si les NE sont sémantiquement correctes, en vérifiant le contenu de chaque
 			élément et leurs liaisons avec les autres.
+
+			TODO: Réaliser les autres vérifications sémantiques
 		"""
 		for i in range(0, len(self.tagged_nodes)):
 			if self.tagged_nodes[i][0] == "NER-Date" and not(self.check_date(i)):
 				self.tagged_nodes[i] = 0
-			# if self.tagged_nodes[i][0] == "NER-Loc":
-			#  	self.tagged_nodes[i][1] = [tuple((self.tagged_nodes[i][1][-1][0], "NER-Loc"))]
-			#  	self.tagged_nodes[i][0] = "NER-Loc"
 		Util.rm_duplicate(self.tagged_nodes)
 
 	def gen_models(self, model_filenames):
@@ -66,35 +65,29 @@ class NER:
 		for i in range(0, len(self.tagged_nodes)):
 			lst = [g[0] for g in self.tagged_nodes[i][1]]
 			lst = r" ".join(lst)
-			self.ner_obj.append([lst, self.tagged_nodes[i][0]])
-
+			self.ner_obj.append(
+				[lst, 
+				 self.tagged_nodes[i][0], 
+				 self.tagged_nodes[i][1][0][2],
+				 self.tagged_nodes[i][1][-1][3]
+				]
+			)
 
 	def use_models(self):
 		"""
 			Utilise les modèles afin d'avoir une précision plus accrue sur le type des entités nommées.
 			On perdra en temps mais on gagnera en précision.
 		"""
+		begin = 0
 		for i in range(0, len(self.ner_obj)):
 			for d in self.dic:
 				if self.ner_obj[i][1] == "NER-Obj":
 					for m in re.finditer(
 						d[1], self.ner_obj[i][0]
 					):
-						self.ner_obj[i][1] = d[0]
-
-
-	def filter_ner(self):
-		"""
-			Filtre les NE afin d'obtenir l'emplacement des NE et retirer les doublons.
-		"""
-		lst = []
-		for ner in self.ner_obj:
-			for m in re.finditer(r"\b" + ner[0] + r"\b", self.text):
-				lst.append(tuple((m.group(), ner[1], m.start(), m.end())))
-		# lst = Util.sort_ner(lst)
-		lst = sorted(list(set(lst)), key=lambda x: x[2])
-		# lst = Util.prioritize_obj(lst)
-		self.ner_obj = lst
+						if(m.end() > begin):
+							begin = m.end()
+							self.ner_obj[i][1] = d[0]
 
 
 	def apply(self):
@@ -102,11 +95,9 @@ class NER:
 			Fonction principale de la classe qui servira à vérifier la sémantique du texte, à créer
 			les NE, à utiliser les modèle et enfin à filter les NE.
 		"""
-
 		self.check()
 		self.create_ner()
 		self.use_models()
-		self.filter_ner()
 		print(self.ner_obj)
 
 

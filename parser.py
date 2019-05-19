@@ -7,9 +7,6 @@ class Parser:
 		une syntaxe contenant une NE.
 	"""
 	GRAMMAR = """
-		NER-Money:
-			{<NER-Number> <NC|N>* <Lmoney|LmoneyM>}
-
 		NER-Month:
 			{<Lmonth>|<LmonthM>}
 
@@ -28,16 +25,19 @@ class Parser:
 		NER-Number: 
 			{<Lnumber>+}
 
+		NER-Money:
+			{<NER-Number> <NC|N>* <Lmoney|LmoneyM>}
+
 		NER-Person:
-			{<DET>* <ADJ>* <Lperson|LpersonM> <ADJ>* (<P> <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM|NER-Loc>+ <CC>* <Lcom>*)* <ADJ>* <Lcom>? <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
-			{<DET>* <ADJ>* <Lperson|LpersonM> <ADJ>* <Lcom>? <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
+			{<Lperson|LpersonM> <ADJ>* (<P> <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM|NER-Loc>+ <CC>* <Lcom>*)* <ADJ>* <Lcom>? <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
+			{<Lperson|LpersonM> <ADJ>* <Lcom>? <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
 		
 		NER-Loc:
 			{<NER-Number> <Lloc> <P>* <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
 			{<Lloc|LlocM> <P>* <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
 
 		NER-Org:
-			{<Lorg|LorgM> <P>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
+			{<Lorg|LorgM> <ADJ>* (<P> <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM|NER-Loc>+ <CC>* <Lcom>*)* <ADJ>* <Lcom>? <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
 			{<Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+ <Lorg|LorgM>}
 
 		NER-Date:
@@ -53,7 +53,7 @@ class Parser:
 
 	def __init__(self, tokens):
 		self.tokens = tokens
-		self.tagged_tokens = []
+		self.tagged_nodes = []
 
 	def parse(self):
 		"""
@@ -66,10 +66,10 @@ class Parser:
 		for subtree in tree.subtrees():
 			if subtree.label() == "S":
 				continue
-			self.tagged_tokens.append(
+			self.tagged_nodes.append(
 				[subtree.label(), subtree.leaves()]
 			)
-		print(self.tagged_tokens)
+		print(self.tagged_nodes)
 
 	"""
 		Récupère le texte parsé.
@@ -77,4 +77,4 @@ class Parser:
 		:return le texte parsé
 	"""
 	def get_parsed_text(self):
-		return self.tagged_tokens
+		return self.tagged_nodes

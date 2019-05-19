@@ -141,31 +141,43 @@ class Util:
 		"""
 			Formater un texte afin de faciliter l'analyse lexicale.
 
-			:param text: text
+			:param text: texte initial
 			:return texte formaté
 		"""
-		text = text.replace("(" , " ( ")
-		text = text.replace(")" , " ) ")
-		text = text.replace("{" , " { ")
-		text = text.replace("}" , " } ")
-		text = text.replace("\"", " \" ")
-		text = text.replace("'", "' ")
-		text = text.replace(", ", " , ")
+		text = text.replace("'"  , "' "  )
+		text = text.replace("’"  , "' "  )
+		text = text.replace("´"  , "' "  )
+		text = text.replace(", " , " , " )
+		text = text.replace(": " , " : " )
+		text = text.replace("; " , " ; " )
+		text = text.replace("("  , " ( " )
+		text = text.replace(")"  , " ) " )
+		text = text.replace("{"  , " { " )
+		text = text.replace("}"  , " } " )
+		text = text.replace("["  , " [ " )
+		text = text.replace("]"  , " ] " )
+		text = text.replace("\"" , " \" ")
 		return text
 
 	@staticmethod
 	def detransform_text(text):
 		"""
-			Déformater un texte afin de faciliter le balisage du texte.
+			Déformater un texte afin de revenir au texte initial.
 
 			:param text texte formaté
-			:return texte déformaté
+			:return texte initial
 		"""
-		text = text.replace("' "   , "'")
-		text = text.replace(" , "  , ", ")
-		text = text.replace(" ( " , "(")
-		text = text.replace(" ) " , ")")
-		text = text.replace(" { " , "{")
-		text = text.replace(" } " , "}")
-		text = text.replace(" \" ", "\"")
+		text = text.replace("' "  , "'"  )
+		text = text.replace("’ "  , "’"  )
+		text = text.replace("´ "  , "´"  )
+		text = text.replace(" , " , ", " )
+		text = text.replace(" : " , ": " )
+		text = text.replace(" ; " , "; " )
+		text = text.replace(" ( " , "("  )
+		text = text.replace(" ) " , ")"  )
+		text = text.replace(" { " , "{"  )
+		text = text.replace(" } " , "}"  )
+		text = text.replace(" [ " , "["  )
+		text = text.replace(" ] " , "]"  )
+		text = text.replace(" \" ", "\"" )
 		return text	
