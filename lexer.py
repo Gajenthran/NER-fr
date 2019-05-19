@@ -4,27 +4,37 @@ from util import Util
 import re
 
 class Lexer:
+	"""
+		Classe qui produira l'analyse lexicale du texte afin de permettre l'analyse 
+		syntaxique. L'analyse lexicale va permettre de couper le texte en lexèmes ("mot"),
+		en leur attribuant des types. Pour cela nous nous aiderons du StanfordPOSTagger.
+	"""
+
 	JAR = 'stanford-postagger/stanford-postagger-3.9.2.jar'
 	MODEL = 'stanford-postagger/models/french.tagger'
 
+	# Expression régulière permettant de couper le texte en lexème
 	LEXEMES = r"Quelqu'un|Aujourd'hui|c'est-à-dire|[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+|[0-9]+\/[0-9]+\/[0-9]+|\w+[-\w+]+|\w+[\/\w+]+|\b[A-Z](?:[\.&]?[A-Z]){1,7}\b|(?:-|\+)?\d*(?:\.|,)?\d+|\d+|\w['´`]|\$[\d\.]+|quelqu'un|aujourd'hui|prud'hom\w+|\w+|\S+"
 
-	MONTH_TAG = r"^(?:Janvier|Février|Fevrier|Mars|Avril|Mai|Juin|Juillet|Aout|Septembre|Octobre|Novembre|Decembre|Décembre|janvier|février|fevrier|mars|avril|mai|juin|juillet|aout|septembre|octobre|novembre|decembre|décembre)$"
-	DAY_TAG = r"^(?:Lundi|Mardi|Mercredi|Jeudi|Vendredi|Samedi|Dimanche|lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)$"
-	PERSON_TAG = r"^(?:roi|Roi|Reine|reine|reine|président|data scientist|statisticien|analyste|médecin|échographiste|mathématicien|ingénieur|pathologiste|actuaire|ergothérapeute|directeur|hygiéniste|diététicien|météorologue|administrateur|ophtalmologue|thérapeute|physicien|chiropracteur|technicien|économiste|responsable|développeur|pharmacien|interprète|traducteur|rédacteur|expert-comptable|agent|juriste|biologiste|professeur|podologue|opticien|libraire|géologue|orthodontiste|écologiste|manager|artiste multimédia|psychiatre|dentiste|vétérinaire|psychologue|programmeur|conseiller d’orientation|coiffeur|historien|assistant|physiologiste|consultant|juge|directeur|principal|zoologiste|conservateur de musée|dessinateur|sociologue|bijoutier|physicien|assureur|comptable|aide-enseignant|dermatologue|assistant|dactylographe|électricien|assistant|inspecteur|chirurgien|sténographe|scientifique|recruteur|secrétaire médicale|community manager|grossiste|machiniste|religieux|monsieur|m|mister|mr|messieurs|mm|madame|mme|mesdames|mmes|mademoiselle|mlle|mesdemoiselles|mlles|veuve|vve|docteur|dr|docteurs|drs|maître|maîtres|professeur|pr|professeurs|prs|auditeur|aud|ingénieur civil|ir|ingénieur industriel|ing|duc|duchesse|marquis|marquise|comte|cte|comtesse|ctesse|vicomte|vte|vicomtesse|vtesse|baron|bon|baronne|bonne|seigneur|sgr|dame|écuyer|ec|messire|sir|lady|lord|émir|émira|chérif|chérifa|cheikh|cheykha|bey|calife|hadjib|nizam|pervane|sultan|vizir|râja|rani|malik|shah|padishah|dom|don|père|monsieur l'abbé|monsieur le curé|mère|m|frère|fr|sœur|sr|révérend|monseigneur|mgr|messeigneurs|mgrs|rabbin)$"
-	LOC_TAG = r"^(?:Aéroport|aéroport|Vallée|Université|université|sud|nord|ouest|Sud|Ouest|Nord|Rue|rue|Pays|Région|région|Cote|Côte|Place|Avenue|Passage|Pays|Allée|Boulevard|boulevard|Carrefour|carrefour|chemin|Chemin|Cité|cité|Cour|Esplanade|Impasse|Gallerie|gallerie|Pont|pont|Quai|quai|Route|route|Square|square|Terrasse|terrasse|Villa|ville)$"
+	# Ensemble des types des mots
+	MAJ_MONTH_TAG = r"^(?:Janvier|Février|Fevrier|Mars|Avril|Mai|Juin|Juillet|Aout|Août|Septembre|Octobre|Novembre|Decembre|Décembre)$"
+	MONTH_TAG = r"^(?:janvier|février|fevrier|mars|avril|mai|juin|juillet|aout|août|septembre|octobre|novembre|decembre|décembre)$"
+	MAJ_DAY_TAG = r"^(?:Lundi|Mardi|Mercredi|Jeudi|Vendredi|Samedi|Dimanche)$"
+	DAY_TAG = r"^(?:lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)$"
+	MAJ_MONEY_TAG = r"^(?:EUR|USD|GBP)$"
 	MONEY_TAG = r"^(?:€|\$|£|euros|euro|dollars|dollar|EUR|USD|yen|yens|dinar|dinars|GBP|francs|franc)$"
 	NUMBER_TAG = r"(?:zéro|un|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt|vingts|vingt et un|trente|trente et un|quarante et un|quarante|cinquante et un|cinquante|soixante et un|soixante|soixante et onze|cent|cents|mille|milles|millions|million|milliard|milliards|billion|billions)"
-	ORG_TAG = r"^(?:entreprise|\.inc|\.Inc|Agence|agence|groupe|Groupe|organisation|Organisation|Société|société)$"
-	PUNC_TAG = r"^(?:…|»|«|—|–|-|’|ʼ|')$"
+	PUNC_TAG = r"^(?:…|»|«|—|–|-|’|ʼ|'|\n)$"
+
+	# Ensemble des règles pour attribuer les types des mots
 	RULES_TAG = [
 		(r"^(?:|,|;|:)$", "Lcom"),
-		(PERSON_TAG, "Lperson"),
-		(LOC_TAG, "Lloc"),
-		(ORG_TAG, "Lorg"),
 		(MONEY_TAG, "Lmoney"),
+		(MAJ_MONEY_TAG, "LmoneyM"),
 		(MONTH_TAG, "Lmonth"),
+		(MAJ_MONTH_TAG, "LmonthM"),
 		(DAY_TAG, "Lday"),
+		(MAJ_DAY_TAG, "LdayM"),
 		(r"^" + NUMBER_TAG + r"-" + NUMBER_TAG + r"$", "Lnumber"), # en lettre
 		(r"^" + NUMBER_TAG + r"$", "Lnumber"), # en lettre
 		(r"^[A-Z](?:\.[A-Z]){1,7}$", "Lacronym"),
@@ -43,8 +53,31 @@ class Lexer:
 		self.text = text
 		self.tagged_tokens = []
 
+	def add_rules(self, filename):
+		"""
+			Ajouter de nouvelles règles pour renforcer l'analyse lexicale
+
+			:param nom du fichier contenant les mots
+			:return expression régulière
+		"""
+		file = Util.read_file(filename)
+		d = file.split();
+		d = Util.to_rgx_lex(d)
+		return d
+
 	def lex(self):
+		"""
+			Analyse le texte lexicalement, à l'aide des règles et des expressions régulières définies.
+			On obtiendra à la fin un tableau de tous les tokens/lexèmes du texte.
+		"""
 		self.text = Util.transform_text(self.text)
+
+		Lexer.RULES_TAG.insert(0, tuple((self.add_rules("tag/fonction.txt"), "Lperson")))
+		Lexer.RULES_TAG.insert(0, tuple((self.add_rules("tag/location.txt"), "Lloc")))
+		Lexer.RULES_TAG.insert(0, tuple((self.add_rules("tag/organisation.txt"), "Lorg")))
+		Lexer.RULES_TAG.insert(0, tuple((self.add_rules("tag/fonction_maj.txt"), "LpersonM")))
+		Lexer.RULES_TAG.insert(0, tuple((self.add_rules("tag/location_maj.txt"), "LlocM")))
+		Lexer.RULES_TAG.insert(0, tuple((self.add_rules("tag/organisation_maj.txt"), "LorgM")))
 
 		pos_tagger = StanfordPOSTagger(Lexer.MODEL, Lexer.JAR, encoding='utf8')
 		tokenizer = RegexpTokenizer(Lexer.LEXEMES)
@@ -60,5 +93,10 @@ class Lexer:
 					self.tagged_tokens[i] = tuple((m.group(), rt[1]))
 		print(self.tagged_tokens)
 
-	def get_tokens(self):
+	def get_tokenized_text(self):
+		"""
+			Récupére tous les tokens/lexèmes du texte.
+
+			:return les tokens du texte
+		"""
 		return self.tagged_tokens

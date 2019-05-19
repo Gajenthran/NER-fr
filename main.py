@@ -9,9 +9,10 @@ import sys
 # preuve interne
 # organisations
 # commentaires
+# enlever majuscules dans tag
 
 def usage(argv):
-    print("Usage: " + str(argv[0]) + " <test_txt> <tagged_txt>")
+    print("Usage: " + str(argv[0]) + " <test_txt> <tagged_txt> [-d]")
     sys.exit()
 
 def main(argv):
@@ -23,22 +24,25 @@ def main(argv):
 		if argv[3] == "-d":
 			dic = False
 
-	ex = "Vous jouez à F-zero"
-	# ex = Util.read_file(argv[1])
+	# ex = "Le président de la République, François Mitterand"
+	ex = Util.read_file(argv[1])
 	ex = Util.transform_text(ex)
 	models = ["data/location.txt", "data/person.txt", "data/organisation.txt"]
 
+	# Analyse lexicale
 	lexer = Lexer(ex)
 	lexer.lex()
 
-	parser = Parser(lexer.get_tokens())
+	# Analyse syntaxique
+	parser = Parser(lexer.get_tokenized_text())
 	parser.parse()
 
-	print(parser.get_tagged_tokens())
-	ner = NER(ex, parser.get_tagged_tokens())
+	# Analyse sémantique + NE
+	ner = NER(ex, parser.get_parsed_text())
 	if dic: ner.gen_models(models)
 	ner.apply()
 
+	# Balisage du texte
 	tagger = Tagger(ner.get_ner(), ex);
 	tagger.tag(argv[2])
 

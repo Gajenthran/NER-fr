@@ -8,7 +8,14 @@ class Tagger:
 		self.notag = True
 
 	def insert_tag(self, source, start, ne):
+		"""
+			Insertion des balises de format <NER...> qui seront exclusivement
+			utilisées pour la reconnaissance des entités nommées.
 
+			:param source le texte source
+			:param la position de départ de l'expression reconnu
+			:param l'entité nommées reconnu
+		"""
 		# balise ouvrante
 		position = start + ne[2]
 		tag = '<NER cat="' + ne[1] + '">'

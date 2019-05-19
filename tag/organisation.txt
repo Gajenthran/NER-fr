@@ -1,0 +1,10 @@
+entreprise
+\.inc
+agence
+agence
+groupe
+groupe
+organisation
+organisation
+société
+société

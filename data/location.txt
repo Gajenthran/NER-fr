@@ -16,7 +16,7 @@ Andorre-la-Vieille
 Angola
 Luanda
 Antigua-et-Barbuda
-Saint John's
+Saint John'\s*s
 Arabie Saoudite
 Riyad
 Argentine
@@ -89,8 +89,8 @@ Corée du Sud
 Séoul
 Costa Rica
 San José
-Côte d'Ivoire
-Cote d'Ivoire
+Côte d'\s*Ivoire
+Cote d'\s*Ivoire
 Yamoussoukro
 Croatie
 Zagreb
@@ -360,7 +360,7 @@ Douchanbé
 Tanzanie
 Dodoma
 Tchad
-N'Djaména
+N'\s*Djaména
 Thaïlande
 Bangkok
 Timor oriental
@@ -370,7 +370,7 @@ Lomé
 Tonga
 Nukuʻalofa
 Trinité-et-Tobago
-Port-d'Espagne
+Port-d'\s*Espagne
 Tunisie
 Tunis
 Turkménistan
@@ -723,7 +723,7 @@ Saint-Laurent-du-Var
 Saint-Leu
 Saint-Louis
 Saint-Malo
-Saint-Martin-d'Hères
+Saint-Martin-d'\s*Hères
 Saint-Maur-des-Fossés
 Saint-Michel-sur-Orge
 Saint-Médard-en-Jalles
@@ -793,9 +793,9 @@ Vigneux-sur-Seine
 Villefranche-sur-Saône
 Villejuif
 Villemomble
-Villenave-d'Ornon
+Villenave-d'\s*Ornon
 Villeneuve-Saint-Georges
-Villeneuve-d'Ascq
+Villeneuve-d'\s*Ascq
 Villeneuve-la-Garenne
 Villeneuve-sur-Lot
 Villeparisis
@@ -869,8 +869,8 @@ Charente
 Charente Maritime
 Cher
 Corrèze
-Côte-d'Or
-Côtes-d'Armor
+Côte-d'\s*Or
+Côtes-d'\s*Armor
 Creuse
 Dordogne
 Doubs
@@ -945,7 +945,7 @@ Essonne
 Hauts-de-Seine
 Seine Saint Denis
 Val-de-Marne
-Val-d'Oise
+Val-d'\s*Oise
 Guadeloupe
 Martinique
 Guyane
@@ -1024,7 +1024,7 @@ Confederate States of America
 Cook Islands
 Coral Sea Islands
 Costa Rica
-Côte d'Ivoire
+Côte d'\s*Ivoire
 Croatia
 Crown Council of Ethiopia
 Crown of Aragon
@@ -1132,7 +1132,7 @@ Jordan
 Judea
 Kazakhstan
 Kenya
-Kievan Rus'
+Kievan Rus'\s*
 Kingdom of Albania
 Kingdom of Aragon
 Kingdom of Bavaria

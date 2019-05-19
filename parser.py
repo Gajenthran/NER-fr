@@ -2,15 +2,19 @@ from nltk.chunk import RegexpParser
 import re
 
 class Parser:
+	"""
+		Classe s'occupant du parsing du texte en créant un ensemble de règles grammaticales afin d'obtenir
+		une syntaxe contenant une NE.
+	"""
 	GRAMMAR = """
 		NER-Money:
-			{<NER-Number> <NC|N>* <Lmoney>}
+			{<NER-Number> <NC|N>* <Lmoney|LmoneyM>}
 
 		NER-Month:
-			{<Lmonth>}
+			{<Lmonth>|<LmonthM>}
 
 		NER-Day:
-			{<Lday>}
+			{<Lday>|<LdayM>}
 
 		NER-Acronym:
 			{<Lacronym>}
@@ -24,27 +28,27 @@ class Parser:
 		NER-Number: 
 			{<Lnumber>+}
 
-		NER-Obj:
-			{<Lobj|NPP>+ <NER-Number>}
-			{<Lobj|NPP>+}
-
-		NER-Loc:
-			{<NER-Number> <Lloc> <P>* <DET>* <NER-Obj>}
-			{<Lloc> <P>* <DET>* <NER-Obj>}
-
 		NER-Person:
-			{<DET>* <ADJ>* <Lperson> <ADJ>* (<P> <DET>* <NER-Obj|NER-Loc>+ <CC>* <Lcom>*)* <ADJ>* <Lcom>? <NER-Obj>}
-			{<DET>* <ADJ>* <Lperson> <ADJ>* <Lcom>? <NER-Obj>}
+			{<DET>* <ADJ>* <Lperson|LpersonM> <ADJ>* (<P> <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM|NER-Loc>+ <CC>* <Lcom>*)* <ADJ>* <Lcom>? <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
+			{<DET>* <ADJ>* <Lperson|LpersonM> <ADJ>* <Lcom>? <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
 		
+		NER-Loc:
+			{<NER-Number> <Lloc> <P>* <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
+			{<Lloc|LlocM> <P>* <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
+
 		NER-Org:
-			{<Lorg> <P>* <NER-Obj>}
-			{<NER-Obj> <Lorg>}
+			{<Lorg|LorgM> <P>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
+			{<Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+ <Lorg|LorgM>}
 
 		NER-Date:
 			{<DET>? <NER-Day|NC> <NER-Number> <NER-Month> <NER-Number>?}
 			{<DET>? <NER-Number> <NER-Month|NC> <NER-Number>}
 			{<DET>? <NER-Number> <NER-Month>}
 			{<Ldate>}
+
+		NER-Obj:
+			{<Lobj|NPP>+ <NER-Number>}
+			{<Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
 	"""
 
 	def __init__(self, tokens):
@@ -52,6 +56,10 @@ class Parser:
 		self.tagged_tokens = []
 
 	def parse(self):
+		"""
+			Parse le texte tokenisé à l'aide de notre grammaire créé pour récupérer les groupes de mots 
+			contenant une NE.
+		"""
 		rp = RegexpParser(Parser.GRAMMAR)
 		tree = rp.parse(self.tokens)
 
@@ -61,6 +69,12 @@ class Parser:
 			self.tagged_tokens.append(
 				[subtree.label(), subtree.leaves()]
 			)
+		print(self.tagged_tokens)
 
-	def get_tagged_tokens(self):
+	"""
+		Récupère le texte parsé.
+
+		:return le texte parsé
+	"""
+	def get_parsed_text(self):
 		return self.tagged_tokens

@@ -1,0 +1,11 @@
+Entreprise
+\.Inc
+\.INC
+\.ltd
+\.LTD
+\.Ltd
+Agence
+Groupe
+Organisation
+Societé
+Société
