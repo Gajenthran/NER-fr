@@ -1,6 +1,5 @@
 from nltk.tokenize import RegexpTokenizer
 from nltk.tag import StanfordPOSTagger
-from nltk.tokenize import WhitespaceTokenizer
 from util import Util
 import re
 
@@ -15,7 +14,7 @@ class Lexer:
 	MODEL = 'stanford-postagger/models/french.tagger'
 
 	# Expression régulière permettant de couper le texte en lexème
-	LEXEMES = r"quelqu'un|aujourd'hui|prud'hom\w+|c'est-à-dire|Prud'hom\w+|Quelqu'un|Aujourd'hui|C'est-à-dire|[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+|[0-9]+\/[0-9]+\/[0-9]+|\w+[-\w+]+|\w+[\/\w+]+|\b[A-Z](?:[\.&]?[A-Z]){1,7}\b|(?:-|\+)?\d*(?:\.|,)?\d+|\d+|\w['´’`]|\$[\d\.]+|\w+|€|\$|£"
+	LEXEMES = r"quelqu'un|aujourd'hui|prud'hom\w+|c'est-à-dire|Prud'hom\w+|Quelqu'un|Aujourd'hui|C'est-à-dire|[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+|[0-9]+\/[0-9]+\/[0-9]+|[0-9]+:[0-9]+|[0-9]+h[0-9]+min|[0-9]+h[0-9]+|[0-9]+min|[0-9]+s|[0-9]+sec|\w+[-\w+]+|\w+[\/\w+]+|\b[A-Z](?:[\.&]?[A-Z]){1,7}\b|(?:-|\+)?\d*(?:\.|,)?\d+|\d+|\w['´’`]|\$[\d\.]+|\w+|€|\$|£|%"
 
 	# Ensemble des types des mots
 	MAJ_MONTH_TAG = r"^(?:Janvier|Février|Fevrier|Mars|Avril|Mai|Juin|Juillet|Aout|Août|Septembre|Octobre|Novembre|Decembre|Décembre)$"
@@ -23,8 +22,11 @@ class Lexer:
 	MAJ_DAY_TAG = r"^(?:Lundi|Mardi|Mercredi|Jeudi|Vendredi|Samedi|Dimanche)$"
 	DAY_TAG = r"^(?:lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)$"
 	MAJ_MONEY_TAG = r"^(?:EUR|USD|GBP)$"
-	MONEY_TAG = r"^(?:€|\$|£|euros|euro|dollars|dollar|EUR|USD|yen|yens|dinar|dinars|GBP|francs|franc)$"
-	NUMBER_TAG = r"(?:zéro|un|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt|vingts|vingt et un|trente|trente et un|quarante et un|quarante|cinquante et un|cinquante|soixante et un|soixante|soixante et onze|cent|cents|mille|milles|millions|million|milliard|milliards|billion|billions)"
+	MONEY_TAG = r"^(?:€|\$|£|euros|euro|centime|centimes|dollars|dollar|EUR|USD|yen|yens|dinar|dinars|GBP|francs|franc)$"
+	NUMBER_TAG = r"^(?:zéro|un|deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt|vingts|vingt et un|trente|trente et un|quarante et un|quarante|cinquante et un|cinquante|soixante et un|soixante|soixante et onze|cent|cents|mille|milles|millions|million|milliard|milliards|billion|billions)$"
+	POURCENTAGE_TAG = r"^(?:%|pourcent)$"
+	UNIT_TAG = r"^[0-9]*(?:mètre|milimètre|centimètre|décimètre|décamètre|hectomètre|kilomètre|mètres|milimètres|centimètres|décimètres|décamètres|hectomètres|kilomètres|m|mm|cm|dm|dam|hm|km|kilogramme|hectogramme|décagramme|décigramme|gramme|centigramme|milligramme|kilogrammes|kilo|hectogrammes|décagrammes|décigrammes|grammes|centigrammes|milligrammes|kg|hg|dag|dg|cg|mg|g|mol|Hz|hz|Hertz|W|Watt|Watts|Volt|Volts|volts|volt|watt|watts|hertz)$"
+	TIME_TAG = r"^(?:min|h|sec|s|minutes|minute|seconde|secondes|heures|heure)$"
 	PUNC_TAG = r"^(?:…|»|«|—|–|-|’|ʼ|')$"
 
 	# Ensemble des règles pour attribuer les types des mots
@@ -36,6 +38,10 @@ class Lexer:
 		(MAJ_MONTH_TAG, "LmonthM"),
 		(DAY_TAG, "Lday"),
 		(MAJ_DAY_TAG, "LdayM"),
+		(POURCENTAGE_TAG, "Lpourcent"),
+		(TIME_TAG, "Lutime"),
+		(UNIT_TAG, "Lunit"),
+		(r"^(?:[0-9]+:[0-9]+|[0-9]+h[0-9]+min|[0-9]+h[0-9]+|[0-9]+min|[0-9]+s|[0-9]+sec)$", "Ltime"),
 		(r"^" + NUMBER_TAG + r"-" + NUMBER_TAG + r"$", "Lnumber"), # en lettre
 		(r"^" + NUMBER_TAG + r"$", "Lnumber"), # en lettre
 		(r"^[A-ZÀÁÂÆÇÈÉÊËÌÍÎÏÑÒÓÔŒÙÚÛÜÝŸß](?:\.[A-ZÀÁÂÆÇÈÉÊËÌÍÎÏÑÒÓÔŒÙÚÛÜÝŸß]){1,7}$", "Lacronym"),
@@ -96,7 +102,7 @@ class Lexer:
 
 		self.tagged_tokens = Util.rm_duplicate(self.tagged_tokens)
 		
-		for m in re.finditer(r"\.|!|\?|\.\.\.|:|;|…|»|«|—|–|-", self.text):
+		for m in re.finditer(r"\.|!|\?|\.\.\.|:|,|;|…|»|«|—|–|-", self.text):
 			self.tagged_tokens.append(tuple((m.group(), "PUNC", m.start(), m.end())))
 
 		self.tagged_tokens = sorted(self.tagged_tokens, key=lambda x: x[2])

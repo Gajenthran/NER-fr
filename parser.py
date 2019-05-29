@@ -22,15 +22,32 @@ class Parser:
 		NER-Mail:
 			{<Lmail>}
 
+		NER-Time:
+			{<Ltime>}
+
 		NER-Number: 
 			{<Lnumber>+}
 
 		NER-Money:
 			{<NER-Number> <NC|N>* <Lmoney|LmoneyM>}
 
+		NER-Pourcent:
+			{<NER-Number> <NC|N>* <Lpourcent>}
+
+		NER-Time:
+			{<NER-Number> <Lutime>}
+			{<Ltime>}
+
+		NER-Unit:
+			{<NER-Number> <Lunit>}
+			{<Lunit>}
+
 		NER-Person:
+			{<Lperson|LpersonM> <ADJ>* (<P> <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM|NER-Loc>+ <CC>* <Lcom>*)* <ADJ>* <Lcom>? <Lperson|LpersonM> <PUNC> <N|Lobj|NPP>+}
 			{<Lperson|LpersonM> <ADJ>* (<P> <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM|NER-Loc>+ <CC>* <Lcom>*)* <ADJ>* <Lcom>? <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
 			{<Lperson|LpersonM> <ADJ>* <Lcom>? <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
+			{<Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+ <Lcom>? <DET>* <Lperson|LpersonM> <ADJ>* (<P> <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM|NER-Loc>+ <CC>* <Lcom>*)*}
+			{<Lperson|LpersonM> <PUNC> <N|Lobj|NPP>+}
 		
 		NER-Loc:
 			{<NER-Number> <Lloc> <P>* <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
@@ -38,6 +55,7 @@ class Parser:
 
 		NER-Org:
 			{<Lorg|LorgM> <ADJ>* (<P> <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM|NER-Loc>+ <CC>* <Lcom>*)* <ADJ>* <Lcom>? <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+}
+			{<Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+ <Lcom>? <DET>* <Lorg|LorgM> <ADJ>* (<P> <DET>* <Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM|NER-Loc>+ <CC>* <Lcom>*)*}
 			{<Lobj|NPP|LdayM|LmonthM|LlocM|LpersonM|LorgM|LmoneyM>+ <Lorg|LorgM>}
 
 		NER-Date:

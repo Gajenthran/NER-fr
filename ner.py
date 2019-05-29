@@ -35,6 +35,23 @@ class NER:
 		for key in models:
 			self.dic.append(tuple((key, r"(?:" + Util.to_rgx(models[key])+ r")")))
 
+
+	def use_models(self):
+		"""
+			Utilise les modèles afin d'avoir une précision plus accrue sur le type des entités nommées.
+			On perdra en temps mais on gagnera en précision.
+		"""
+		begin = 0
+		for i in range(0, len(self.ner_obj)):
+			for d in self.dic:
+				if self.ner_obj[i][1] == "NER-Obj":
+					for m in re.finditer(
+						d[1], self.ner_obj[i][0]
+					):
+						if(m.end() > begin):
+							begin = m.end()
+							self.ner_obj[i][1] = d[0]
+
 	def check_date(self, index):
 		"""
 			Vérifie le contenu de la date en vérifiant si la valeur représentant le jour
@@ -72,23 +89,6 @@ class NER:
 				 self.tagged_nodes[i][1][-1][3]
 				]
 			)
-
-	def use_models(self):
-		"""
-			Utilise les modèles afin d'avoir une précision plus accrue sur le type des entités nommées.
-			On perdra en temps mais on gagnera en précision.
-		"""
-		begin = 0
-		for i in range(0, len(self.ner_obj)):
-			for d in self.dic:
-				if self.ner_obj[i][1] == "NER-Obj":
-					for m in re.finditer(
-						d[1], self.ner_obj[i][0]
-					):
-						if(m.end() > begin):
-							begin = m.end()
-							self.ner_obj[i][1] = d[0]
-
 
 	def apply(self):
 		"""

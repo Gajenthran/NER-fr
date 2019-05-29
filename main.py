@@ -8,7 +8,6 @@ import sys
 
 """
 TODO:
-	preuve interne: contexte droit
 	contenu dans le dossier tag pour la REN
 	analyse sémantique à rajouter
 	multi-thread?
