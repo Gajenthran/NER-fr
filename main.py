@@ -32,32 +32,45 @@ def main(argv):
 
 	dic = False
 	freq = False
-	if len(argv) == 4:
+	own_tag = False
+	if len(argv) >= 4:
 		if argv[3] == "-d":
 			dic = True
 
-	if len(argv) == 5:
-		if argv[3] == "-d":
-			dic = True
-
-	if len(argv) == 4:
+	if len(argv) >= 4:
 		if argv[3] == "-f":
 			freq = True
 
-	if len(argv) == 5:
+	if len(argv) >= 5:
 		if argv[4] == "-f":
 			freq = True
+
+	if len(argv) >= 5:
+		if argv[4] == "-f":
+			freq = True
+
+	if len(argv) >= 4:
+		if argv[3] == "-t":
+			own_tag = True
+
+	if len(argv) >= 5:
+		if argv[4] == "-t":
+			own_tag = True
+
+	if len(argv) >= 6:
+		if argv[5] == "-t":
+			own_tag = True
 
 	ex = Util.read_file(argv[1])
 	ex = Util.transform_text(ex)
 	models = ["data/location.txt", "data/person.txt", "data/organisation.txt"]
 
 	# Analyse lexicale
-	lexer = Lexer(ex)
+	lexer = Lexer(ex, own_tag)
 	lexer.lex()
 
 	# Analyse syntaxique
-	parser = Parser(lexer.get_tokenized_text())
+	parser = Parser(lexer.get_tokenized_text(), own_tag)
 	parser.parse()
 
 	# Analyse sémantique + reconnaissance des EN

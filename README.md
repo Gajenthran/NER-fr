@@ -6,13 +6,13 @@ La reconnaissance d'entités nommées est une sous-tâche de l'activité d'extra
 # Usage
 
 ```
-python3 main.py <test.txt> <dest.xml> [-d]
+python3 main.py <test.txt> <dest.xml> [-d] [-f] [-t]
 ```
 Il est plutôt recommendé que le fichier ```dest``` soit un fichier ```xml``` pour le balisage. 
-L'option ```[-d]``` permet de faire appel aux modèles afin d'obtenir une reconnaissance plus accrue des entités nommées mais augmente considérablement le temps de d'exécution.
+L'option ```[-d]``` permet de faire appel aux modèles afin d'obtenir une reconnaissance plus accrue des entités nommées mais augmente considérablement le temps de d'exécution, Le ```[-f]``` permettant d'obtenir la fréquence des entités nommées dans le texte et le  ```[-t]``` permet d'utiliser notre propre etiquetage et éviter celui de Stanford. 
 Par exemple,
 ```
-python3 main.py test.txt fifi.xml
+python3 main.py test.txt dest.xml
 ```
 
 # Etapes menant à la reconnaissance
@@ -25,6 +25,7 @@ Avant de vérfier la syntaxe et le contexte du texte, nous allons tout d'abord f
 La modification du texte passe par la modification de certains caractères spéciaux notamment les apostrophes qui auront du mal à être reconnu par notre analyse lexicale. 
 Une fois le texte modifié, nous pouvons procéder à une analyse lexicale qui consiste à couper tous les "mots" du texte en lexèmes, où on pourra donner à chacun un type nommé "tag". De plus nous retiendrons la position du début et de fin de chaque lexème afin de pouvoir faciliter le balisage.
 Pour cela on s'aidera de ```StanfordPOSTagger``` pour tagger une grande partie des mots (notamment pour les classes grammaticales) et on définira certains mots selon notre dictionnaire de tag pour aider l'analyse syntaxique.
+Nous pouvons également éviter d'utiliser cette etiquetage, avec l'option  ```[-t]```. En effet, la classe grammaticale de tous les mots ne sont pas utiles pour la reconnaissance des entités nommées (nous marquerons "None" pour les mots n'ayant pas d'etiquette). 
 
 ## Analyse syntaxique
 Dans l'analyse syntaxique, on va pouvoir définir notre grammaire pour identifier toutes EN, pour l'instant seulement le contexte gauche. Une preuve externe va permettre justement dans un premier temps, d'identifier une possible entité nommée et enfin si ce n'est pas le cas on effectuera une preuve interne.
@@ -39,5 +40,12 @@ Par exemple pour une date peut être défini de la manière suivante:
 ## Analyse sémantique + NE
 L'analyse sémantique va nous permettre de vérifier le sens des NE que nous avons identifié prédémment. Notamment la date, en vérifiant si les nombres sont bien des jours de l'année (compris entre 0 et 31) par exemple. Une fois les vérifications terminées, nous pouvons utiliser les modèles afin d'améliorer notre reconnaissance.
 
-## Tagger
+# Tagger
+
+## Etiquetage du texte donnée
+
 Une fois les analyses terminées, nous allons pouvoir tagger notre texte de la manière suivante: ```<NER cat=[type]></NER>``` où ```NER``` correspond à Named Entities Recognition.
+
+## Fréquence des EN
+
+Avec l'option  ```[-f]```, nous obtiendrons un fichier .xml avec les différents catégories de NE ainsi que leurs occurences.

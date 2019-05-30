@@ -1,5 +1,6 @@
 from nltk.tokenize import RegexpTokenizer
 from nltk.tag import StanfordPOSTagger
+import nltk
 from util import Util
 import re
 
@@ -56,9 +57,10 @@ class Lexer:
 		(PUNC_TAG, "PUNC"),
 	]
 
-	def __init__(self, text):
+	def __init__(self, text, own_tag=False):
 		self.text = text
 		self.tagged_tokens = []
+		self.own_tag = own_tag
 
 	def add_rules(self, filename):
 		"""
@@ -68,11 +70,82 @@ class Lexer:
 			:return expression régulière
 		"""
 		file = Util.read_file(filename)
-		d = file.split();
+		d = file.split()
 		d = Util.to_rgx_lex(d)
 		return d
 
-	def lex(self):
+	def tokenize_own_tag(self):
+		"""
+			Analyse le texte lexicalement, à l'aide des règles et des expressions régulières définies.
+			On obtiendra à la fin un tableau de tous les tokens/lexèmes du texte sans l'aide de
+			StanfordPOSTagger.
+		"""
+		Lexer.RULES_TAG.insert(0, tuple((self.add_rules("tag/fonction.txt"), "Lperson")))
+		Lexer.RULES_TAG.insert(0, tuple((self.add_rules("tag/location.txt"), "Lloc")))
+		Lexer.RULES_TAG.insert(0, tuple((self.add_rules("tag/organisation.txt"), "Lorg")))
+		Lexer.RULES_TAG.insert(0, tuple((self.add_rules("tag/fonction_maj.txt"), "LpersonM")))
+		Lexer.RULES_TAG.insert(0, tuple((self.add_rules("tag/location_maj.txt"), "LlocM")))
+		Lexer.RULES_TAG.insert(0, tuple((self.add_rules("tag/organisation_maj.txt"), "LorgM")))
+
+		Lexer.RULES_TAG.append(tuple((self.add_rules("tag/conjonction.txt"), "Lcc")))
+		Lexer.RULES_TAG.append(tuple((self.add_rules("tag/preposition.txt"), "Lprep")))
+		Lexer.RULES_TAG.append(tuple((self.add_rules("tag/determinant.txt"), "Ldet")))
+		Lexer.RULES_TAG.append(tuple((self.add_rules("tag/adverbe.txt"), "Ladv")))
+		Lexer.RULES_TAG.append(tuple((self.add_rules("tag/pronom.txt"), "Lpronom")))
+		Lexer.RULES_TAG.append(tuple((self.add_rules("tag/subordination.txt"), "Lsub")))
+
+		tokenizer = RegexpTokenizer(Lexer.LEXEMES)
+		tokens = tokenizer.tokenize(self.text)
+
+		begin = 0
+		for i in range(0, len(tokens)):
+			for m in re.finditer(tokens[i], self.text):
+				if(m.end() > begin):
+					tokens[i] = tuple((tokens[i], m.start(), m.end()))
+					begin = m.end()
+					break
+
+
+		for i in range(0, len(tokens)):
+			if len(tokens[i]) != 3:
+				tokens[i] = 0
+
+		tokens = Util.rm_duplicate(tokens)
+		for m in re.finditer(r"\.|!|\?|\.\.\.|:|,|;|…|»|«|—|–|-", self.text):
+			if m.group() == r"," or m.group() == r":" or m.group() == r";":
+				self.tagged_tokens.append([m.group(), "Lcom", m.start(), m.end()])
+			else:
+				self.tagged_tokens.append([m.group(), "PUNC", m.start(), m.end()])
+
+		for i in range(0, len(tokens)):
+			find = False
+			for rt in Lexer.RULES_TAG:
+				for m in re.finditer(rt[0], tokens[i][0]):
+					find = True
+					if i == 0:
+						self.tagged_tokens.append([tokens[i][0], "None", tokens[i][1], tokens[i][2]])
+						continue
+					if len(self.tagged_tokens) != 0 and m.group() == self.tagged_tokens[-1][0] and tokens[i][1] == self.tagged_tokens[-1][2]:
+						continue
+					self.tagged_tokens.append([m.group(), rt[1], tokens[i][1], tokens[i][2]])
+			if not(find):
+				self.tagged_tokens.append([tokens[i][0], "None", tokens[i][1], tokens[i][2]])
+		self.tagged_tokens = sorted(self.tagged_tokens, key=lambda x: x[2])
+
+		for i in range(0, len(self.tagged_tokens)):
+			if(i > 0 and self.tagged_tokens[i-1][1] == "PUNC"):
+				find = False
+				for j in range(1, len(self.tagged_tokens)):
+					if (self.tagged_tokens[j-1][1] != "PUNC" and self.tagged_tokens[j][1] == "Lobj") and self.tagged_tokens[i][0] == self.tagged_tokens[j][0] and self.tagged_tokens[i][2] != self.tagged_tokens[j][2]:
+						find = True
+						break
+				if not(find) and self.tagged_tokens[i][1] == "Lobj":
+					self.tagged_tokens[i][1] = "None"
+
+		self.tagged_tokens = [tuple(l) for l in self.tagged_tokens]
+		print(self.tagged_tokens)
+
+	def tokenize(self):
 		"""
 			Analyse le texte lexicalement, à l'aide des règles et des expressions régulières définies.
 			On obtiendra à la fin un tableau de tous les tokens/lexèmes du texte.
@@ -116,6 +189,14 @@ class Lexer:
 					self.tagged_tokens[i] = tuple((m.group(), rt[1], self.tagged_tokens[i][2], self.tagged_tokens[i][3]))
 		print(self.tagged_tokens)
 
+	def lex(self):
+		"""
+			Analyse le texte lexicalement, avec ou sans le StanfordPOSTagger selon les options.
+		"""
+		if self.own_tag:
+			self.tokenize_own_tag()
+		else:
+			self.tokenize()
 
 	def get_tokenized_text(self):
 		"""

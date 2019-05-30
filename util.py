@@ -70,11 +70,11 @@ class Util:
 			:param expressions liste de mots
 			:return une expression régulière
 		"""
-		reg = r'';
+		reg = r''
 		for expr in expressions:
-			reg += r'\b(' + expr + r')\b|';
-		reg = reg[:-1];
-		return reg;
+			reg += r'\b(' + expr + r')\b|'
+		reg = reg[:-1]
+		return reg
 
 	@staticmethod
 	def to_rgx_lex(expressions):
@@ -85,12 +85,28 @@ class Util:
 			:param expressions liste de mots
 			:return une expression régulière
 		"""
-		reg = r'^(?:';
+		reg = r'^(?:'
 		for expr in expressions:
-			reg += expr +r'|';
-		reg = reg[:-1];
+			reg += expr +r'|'
+		reg = reg[:-1]
 		reg += r")$"
-		return reg;
+		return reg
+
+	@staticmethod
+	def to_rgx_lextag(expressions):
+		"""
+			Transforme une liste de mots en expression régulière avec chaque mot
+			de la liste séparé par des | pour l'analyse lexicale.
+
+			:param expressions liste de mots
+			:return une expression régulière
+		"""
+		reg = r'('
+		for expr in expressions:
+			reg += expr +r'|'
+		reg = reg[:-1]
+		reg += r")$"
+		return reg
 
 	@staticmethod
 	def prioritize_obj(lst):
