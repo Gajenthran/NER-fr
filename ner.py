@@ -100,7 +100,6 @@ class NER:
 		self.use_models()
 		print(self.ner_obj)
 
-
 	def get_ner(self):
 		"""
 			Récupère les NE.

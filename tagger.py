@@ -52,12 +52,47 @@ class Tagger:
 		return True
 
 
+	def freq_tag(self, dest_file):
+		"""
+			Créer un fichier .xml en récupérant tous les EN en les regroupant par catégories.
+
+			:param dest_file: fichier texte       
+		"""
+		nes = []
+		freq_ne = {}
+		self.named_entities = sorted(self.named_entities, key=lambda x: x[1])
+		for ne in self.named_entities:
+			if ne[0] in nes:
+				freq = freq_ne[ne[0]][1]
+				freq_ne[ne[0]] = [ne[1], freq + 1]
+			else:
+				nes.append(ne[0])
+				freq_ne[ne[0]] = [ne[1], 1]
+
+		text = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
+		text += "<NEs>\n\n"
+
+		fne = [[k,v] for k, v in freq_ne.items() ]
+		it = 0
+		while it < len(fne):
+			text += "\t<NE cat=\"" + fne[it][1][0] + "\">\n"
+			text += "\t\t<word occ=\"" + str(fne[it][1][1]) + "\">" + fne[it][0] + "</word>\n"
+			it += 1
+			while it < len(fne) and fne[it][1][0] == fne[it-1][1][0]:
+				text += "\t\t<word occ=\"" + str(fne[it][1][1]) + "\">" + fne[it][0] + "</word>\n"
+				it += 1
+			text += "\t</NE>\n\n"
+		text += "</NEs>\n"
+
+		Util.write_file(dest_file, text)
+
+
 	def tag(self, dest_file):
 		"""
 			Transformer le fichier texte donnée en entrée en fichier .xml en balisant les mots 
 			du dictionnaire
 
-			:param txt: fichier texte       
+			:param dest_file: fichier texte       
 		"""
 		beg = 0
 		end = 0

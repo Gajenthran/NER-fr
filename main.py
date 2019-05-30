@@ -17,13 +17,13 @@ TODO:
 def usage(argv):
 	"""
 		REN = Reconnaissance d'Entités Nommées
-		$ python3 main.py <test> <dest> [-d]
+		$ python3 main.py <test> <dest> [-d] [-f]
 		De préférence le fichier <dest> devrait être un fichier xml pour 
 		mieux voir les balises. Et l'option -d permettra de générer des
 		modèles afin d'améliorer la REN mais augmente considérablement
 		le temps d'exécution.
 	"""
-	print("Usage: " + str(argv[0]) + " <test.txt> <dest.xml> [-d]")
+	print("Usage: " + str(argv[0]) + " <test.txt> <dest.xml> [-d] [-f]")
 	sys.exit()
 
 def main(argv):
@@ -31,9 +31,22 @@ def main(argv):
 		usage(argv)
 
 	dic = False
+	freq = False
 	if len(argv) == 4:
 		if argv[3] == "-d":
 			dic = True
+
+	if len(argv) == 5:
+		if argv[3] == "-d":
+			dic = True
+
+	if len(argv) == 4:
+		if argv[3] == "-f":
+			freq = True
+
+	if len(argv) == 5:
+		if argv[4] == "-f":
+			freq = True
 
 	ex = Util.read_file(argv[1])
 	ex = Util.transform_text(ex)
@@ -53,8 +66,11 @@ def main(argv):
 	ner.apply()
 
 	# Balisage du texte
-	tagger = Tagger(ner.get_ner(), ex);
-	tagger.tag(argv[2])
+	tagger = Tagger(ner.get_ner(), ex)
+	if freq:
+		tagger.freq_tag(argv[2])
+	else:
+		tagger.tag(argv[2])
 
 if __name__ == '__main__':
 	main(sys.argv)
